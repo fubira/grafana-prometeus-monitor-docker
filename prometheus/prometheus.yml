@@ -1,0 +1,10 @@
+scrape_configs:
+  - job_name: monitor-host
+    static_configs:
+      - targets:
+        - localhost:9090
+
+  - job_name: monitor-node
+    static_configs:
+      - targets:
+        - monitor-node:9100

@@ -1,0 +1,39 @@
+version: '3'
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    user: "1000:1000"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter
+    container_name: node-exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /rootfs:/rootfs:ro
+
+  grafana-proxy:
+    container_name: grafana-proxy
+    image: nginx
+    restart: always
+    ports:
+      - '$PORT:443'
+    environment:
+      - NGINX_SERVER_NAME=${NGINX_SERVER_NAME}
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - /etc/letsencrypt:/etc/letsencrypt
