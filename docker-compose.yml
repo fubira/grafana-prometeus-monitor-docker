@@ -24,7 +24,7 @@ services:
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-      - /rootfs:/rootfs:ro
+      - /:/rootfs:ro
 
   grafana-proxy:
     container_name: grafana-proxy
