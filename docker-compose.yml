@@ -26,6 +26,13 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
 
+  blackbox-exporter:
+    image: quay.io/prometheus/blackbox-exporter
+    container_name: blackbox-exporter
+    restart: always
+    volumes:
+      - ./blackbox/blackbox.yml:/blackbox-exporter/blackbox.yml
+
   grafana-proxy:
     container_name: grafana-proxy
     image: nginx
